@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1500 English words with antonyms</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #eaf7ea; color: #2f4f2f; margin:0; padding:20px;}
+h1 { text-align:center; color:#1a4d1a;}
+.word-card { background:#ffffff; border:2px solid #4CAF50; border-radius:12px; padding:15px; margin:10px 0; cursor:pointer; transition:0.3s;}
+.word-card:hover { background:#f0fff0;}
+.details { display:none; margin-top:10px; padding-left:10px; border-left:3px solid #4CAF50;}
+.antonyms { color:#006400; margin-top:5px;}
+.header-img { text-align:center; margin-bottom:20px;}
+.header-img img { max-width:100%; height:auto; border-radius:12px;}
+</style>
+</head>
+<body>
+<div class="header-img">
+  <img src="header.png" alt="English Words Banner">
+</div>
+<h1>1500 English words with antonyms</h1>
+<div id="words-list"></div>
+<script>
+const data = [
+  {
+    "Слово": "Alive",
+    "Антонимы": ["Unconscious", "Sluggish", "Deceased", "Dead"],
+    "Значение": null
+  },
+  {
+    "Слово": "Abundant",
+    "Антонимы": ["Lacking", "Sparse", "Meager", "Scarce"],
+    "Значение": "Plentiful, ample"
+  },
+  {
+    "Слово": "Unite",
+    "Антонимы": ["Separate"],
+    "Значение": "Join, connect"
+  }
+  // Здесь можно вставить полный JSON с 1500 словами
+];
+const listContainer = document.getElementById("words-list");
+data.forEach(entry => {
+  const card = document.createElement("div");
+  card.className = "word-card";
+  const word = document.createElement("div");
+  word.textContent = entry["Слово"];
+  card.appendChild(word);
+  const details = document.createElement("div");
+  details.className = "details";
+  if (entry["Значение"]) {
+    const meaning = document.createElement("div");
+    meaning.innerHTML = "<b>Значение:</b> " + entry["Значение"];
+    details.appendChild(meaning);
+  }
+  const antonyms = document.createElement("div");
+  antonyms.className = "antonyms";
+  antonyms.innerHTML = "<b>Антонимы:</b> " + entry["Антонимы"].join(", ");
+  details.appendChild(antonyms);
+  card.appendChild(details);
+  card.addEventListener("click", () => {
+    details.style.display = details.style.display === "none" ? "block" : "none";
+  });
+  listContainer.appendChild(card);
+});
+</script>
+</body>
+</html>
