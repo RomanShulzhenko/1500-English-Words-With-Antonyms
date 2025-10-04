@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e6f2e6;
+  color: #003300;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #339966;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
+main {
+  padding: 20px;
+}
+
+#search {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 2px solid #339966;
+  border-radius: 5px;
+}
+
+#word-list {
+  list-style: none;
+  padding: 0;
+}
+
+.word-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #cce6cc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.word-item:hover {
+  background-color: #b3ddb3;
+}
+
+.antonyms {
+  margin-top: 5px;
+  padding-left: 15px;
+  color: #004d00;
+}
