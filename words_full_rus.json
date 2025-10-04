@@ -1,4 +1,4 @@
-[
+
   {"word": "Alive", "antonyms": ["Unconscious", "Sluggish", "Deceased", "Dead"], "meaning": null, "antonym": null},
   {"word": "Advance", "antonyms": ["Retire", "Behind", "Later", "Retreat"], "meaning": null, "antonym": null},
   {"word": "Admit", "antonyms": ["Repudiate", "Expel", "Oust", "Deny"], "meaning": null, "antonym": null},
@@ -287,5 +287,5 @@
   {"word": "Peaceful", "antonyms": ["Serene", "Calm"], "meaning": "Serene, calm", "antonym": "Chaotic"},
   {"word": "Playful", "antonyms": ["Lively", "Frolicsome"], "meaning": "Lively, frolicsome", "antonym": "Serious"},
   {"word": "Pleasant", "antonyms": ["Enjoyable", "Pleasing"], "meaning": "Enjoyable, pleasing", "antonym": "Unpleasant"}
-]
+
 
