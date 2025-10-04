@@ -39,7 +39,162 @@ const data = [
     "Антонимы": ["Separate"],
     "Значение": "Join, connect"
   }
-  // Здесь можно вставить полный JSON с 1500 словами
+  <!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>1500 English words with antonyms</title>
+<style>
+  :root{
+    --bg:#eaf7ea;
+    --text:#2f4f2f;
+    --accent:#4CAF50;
+    --accent-dark:#1a4d1a;
+    --card:#ffffff;
+  }
+  body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:18px;}
+  .container{max-width:980px;margin:0 auto;padding-bottom:60px;}
+  .header{ text-align:center; margin-bottom:14px;}
+  .header img{max-width:100%;height:auto;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+  h1{color:var(--accent-dark);text-align:center;margin:12px 0 18px;font-size:20px;}
+  .controls{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .search{flex:1;max-width:520px;}
+  input[type="search"]{width:100%;padding:10px 12px;border-radius:10px;border:2px solid rgba(0,0,0,0.06);box-shadow:none;font-size:15px}
+  .words{margin-top:6px;}
+  .word-card{background:var(--card);border:2px solid var(--accent);border-radius:12px;padding:14px;margin:10px 0;cursor:pointer;transition:transform .12s, box-shadow .12s;}
+  .word-card:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,0.06)}
+  .word-title{font-weight:700;font-size:18px;color:var(--accent-dark)}
+  .details{display:none;margin-top:10px;padding-left:10px;border-left:3px solid var(--accent);line-height:1.5}
+  .antonyms{color:#006400;margin-top:6px}
+  .badge{display:inline-block;background:var(--accent);color:white;padding:4px 8px;border-radius:10px;font-size:12px;margin-left:8px}
+  .footer-note{font-size:13px;color:#3b6b3b;text-align:center;margin-top:18px}
+  /* responsive */
+  @media(max-width:560px){
+    .controls{flex-direction:column;align-items:stretch}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <!-- Положите ваш banner рядом с index.html и назовите header.png -->
+      <img src="header.png" alt="Banner" id="banner">
+    </div>
+
+    <h1>1500 English words with antonyms</h1>
+
+    <div class="controls">
+      <div class="search">
+        <input type="search" id="search" placeholder="Поиск слова (введите английское слово или часть слова)" />
+      </div>
+      <div style="min-width:120px;text-align:right">
+        <span class="badge" id="count">0 слов</span>
+      </div>
+    </div>
+
+    <div id="words" class="words"></div>
+
+    <div class="footer-note">
+      Для установки баннера замените файл <code>header.png</code>. Сайт работает сразу при публикации на GitHub Pages.
+    </div>
+  </div>
+
+<script>
+/* ======= ВСТАВЬТЕ ПОЛНЫЙ JSON МАССИВ ЗДЕСЬ =======
+   Замените следующий однострочный placeholder на ваш полный JSON-массив.
+   Пример структуры элемента:
+   {"Слово":"Alive","Антонимы":["Unconscious","Sluggish","Deceased","Dead"],"Значение":null}
+*/
+const data = /* INSERT_FULL_JSON_HERE */ [];
+
+/* --- Преобразуем данные в удобный массив и отсортируем по слову --- */
+const words = (Array.isArray(data) ? data : []).slice().sort((a,b)=>{
+  const A=(a["Слово"]||"").toLowerCase(), B=(b["Слово"]||"").toLowerCase();
+  return A < B ? -1 : A > B ? 1 : 0;
+});
+
+const wordsContainer = document.getElementById('words');
+const countEl = document.getElementById('count');
+const searchInput = document.getElementById('search');
+
+function renderList(list){
+  wordsContainer.innerHTML = '';
+  countEl.textContent = list.length + (list.length===1? ' слово' : ' слов');
+  if(list.length === 0){
+    wordsContainer.innerHTML = '<p style="color:#2f4f2f;opacity:0.8">Не найдено слов по запросу.</p>';
+    return;
+  }
+  // Создаём карточки
+  list.forEach(entry => {
+    const card = document.createElement('div');
+    card.className = 'word-card';
+
+    const title = document.createElement('div');
+    title.className = 'word-title';
+    title.textContent = entry["Слово"] || '';
+    card.appendChild(title);
+
+    const details = document.createElement('div');
+    details.className = 'details';
+
+    // Значение
+    if(entry["Значение"]){
+      const def = document.createElement('div');
+      def.innerHTML = '<b>Значение:</b> ' + entry["Значение"];
+      details.appendChild(def);
+    }
+
+    // Антонимы (вставляем массив в строку)
+    const ant = document.createElement('div');
+    ant.className = 'antonyms';
+    const arr = Array.isArray(entry["Антонимы"]) ? entry["Антонимы"] : (entry["Антонимы"] ? [entry["Антонимы"]] : []);
+    ant.innerHTML = '<b>Антонимы:</b> ' + (arr.length ? arr.join(', ') : '—');
+    details.appendChild(ant);
+
+    card.appendChild(details);
+
+    // Клик — показать/скрыть детали
+    card.addEventListener('click', () => {
+      details.style.display = details.style.display === 'block' ? 'none' : 'block';
+      // прокрутка к карточке (на мобилях удобно)
+      if(details.style.display === 'block'){
+        setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'center'}),120);
+      }
+    });
+
+    wordsContainer.appendChild(card);
+  });
+}
+
+// Поиск (фильтр)
+function filterQuery(q){
+  if(!q) return words;
+  const s = q.trim().toLowerCase();
+  return words.filter(e=>{
+    const w = (e["Слово"]||"").toLowerCase();
+    const def = (e["Значение"]||"").toLowerCase();
+    const ants = (Array.isArray(e["Антонимы"])? e["Антонимы"].join(' ') : (e["Антонимы"]||'')).toLowerCase();
+    return w.includes(s) || def.includes(s) || ants.includes(s);
+  });
+}
+
+// Инициализация
+renderList(words);
+
+// Событие поиска (немного дебаунса)
+let timer=null;
+searchInput.addEventListener('input', () => {
+  clearTimeout(timer);
+  timer = setTimeout(()=>{
+    const q = searchInput.value;
+    const filtered = filterQuery(q);
+    renderList(filtered);
+  }, 180);
+});
+</script>
+</body>
+</html>
 ];
 const listContainer = document.getElementById("words-list");
 data.forEach(entry => {
