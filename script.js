@@ -312,6 +312,8 @@ function displayWords(list) {
     });
     wordList.appendChild(li);
   });
+ displayWords(words);
 }
+
 
 
